@@ -1,0 +1,10 @@
+{
+  "name": "cursoTypeScript",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "w10 <matheus.h.da.s.mendes13@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
