@@ -1,36 +1,40 @@
-// lesson 16, 17 - POO #1
+// lesson 16, 17, 18 - Programação Orientada a Objetos (POO)
 
 
 class Computer {
     private name:string;
     private processador:string;
     private ram:number;
-    private on:boolean = false;
+    private on:boolean;
 
     //metodo construtor
     constructor(name:string, processador:string, ram:number){
         this.name = name;
         this.processador = processador;
         this.ram = ram;
+        this.on = false;
         console.log("novo computador criado: " + this.name)
     }
 
-    print(){
+    info():void{
         console.log("---------------------------------")
         console.log(`name: ${this.name}`);
         console.log(`processador: ${this.processador}`);
         console.log(`ram: ${this.ram}GB`);
+        console.log(`ligado? ${this.on?"sim":"nao"}`)
     }
 
-    turnON(){
-        if(this.on === false){
+    power(code:number):void{
+        if(code === 1){
             this.on = true;
-            console.log("computer TURN-ON");
+            console.log(`computer ${this.name} TURN-ON`);
         } else {
             this.on = false;
-            console.log("computer TURN-OFF");
+            console.log(`computer ${this.name} TURN-OFF`);
         }
     }
+
+
 
 }
 
@@ -38,17 +42,11 @@ class Computer {
 const computer1 = new Computer("gamer", "AMD Ryzen 5 4600G", 16);
 const computer2 = new Computer("office", "AMD Ryzen 7 5700X3D", 32);
 
-computer1.print();
-computer2.print();
+computer1.info();
+computer2.info();
 
 console.log("-----------------------")
 console.log("-----------------------")
 
-computer1.turnON()
-computer2.turnON()
-
-computer1.turnON()
-computer2.turnON()
-
-computer1.turnON()
-computer2.turnON()
+computer1.power(1)
+computer1.power(0)
