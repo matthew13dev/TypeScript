@@ -1,6 +1,16 @@
-// lesson 16, 17, 18 - Programação Orientada a Objetos (POO)
+/*
+Programação Orientada a Objetos (POO)
 
+    lesson 16 - Classes
+    lesson 17 - Método Construtor
+    lesson 18 - Métodos
+    lesson 19 - Modificadores de acesso
+*/
 
+enum power {
+    on = "on",
+    off = "off",
+}
 class Computer {
     private name:string;
     private processador:string;
@@ -24,17 +34,25 @@ class Computer {
         console.log(`ligado? ${this.on?"sim":"nao"}`)
     }
 
-    power(code:number):void{
-        if(code === 1){
+    status(status:power):void{
+        if(status === power.on){
             this.on = true;
             console.log(`computer ${this.name} TURN-ON`);
-        } else {
+        } 
+        else {
             this.on = false;
             console.log(`computer ${this.name} TURN-OFF`);
         }
     }
 
-
+    upRam(value:number):void{
+        if(value >= 0){
+            this.ram = value;
+        } 
+        else {
+            console.log(`value ${value} not enable!`)
+        }
+    }
 
 }
 
@@ -48,5 +66,10 @@ computer2.info();
 console.log("-----------------------")
 console.log("-----------------------")
 
-computer1.power(1)
-computer1.power(0)
+computer1.status(power.on)
+computer1.status(power.off)
+
+console.log(power)
+
+computer1.upRam(32);
+computer1.info();
