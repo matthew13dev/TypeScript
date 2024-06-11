@@ -1,3 +1,4 @@
+"use strict";
 /*
     Programação Orientada a Objetos (POO)
 
@@ -7,56 +8,50 @@
     POO #08 - lesson 23 - HERANÇA #4
     POO #09 - lesson 24 - HERANÇA #5
     POO #10 - lesson 25 - Getters and Setters
+    POO #11 - lesson 26 - Classe Abstratas
 */
-
-enum accountType {
-    DEFAULT = "DEFAULT",
-    FISICO = "Pessoa Física",
-    JURIDICO = "Pessoa Juridica",
-}
-
-
+var accountType;
+(function (accountType) {
+    accountType["DEFAULT"] = "DEFAULT";
+    accountType["FISICO"] = "Pessoa F\u00EDsica";
+    accountType["JURIDICO"] = "Pessoa Juridica";
+})(accountType || (accountType = {}));
 class Acount {
     /*
     PUBLIC - Acessado de qualquer lugar
     PRIVATE - Acessado somente pela classe "PAI"
     PROTECTED - Acessado tanto pela classe "PAI" quanto pela classe "FILHA"
 ;    */
-    protected number: number;
-    protected user: string;
-    private saldo: number;
-
-    constructor(user: string) {
+    number;
+    user;
+    saldo;
+    constructor(user) {
         this.number = this.gerarNumberAccount();
         this.user = user;
         this.saldo = 0;
     }
-
-    private gerarNumberAccount(): number {
+    gerarNumberAccount() {
         let accountNumber = Math.floor(Math.random() * 100000) + 1;
         return accountNumber;
     }
-
-    public info(): void {
-        console.log("-------------------------------")
+    info() {
+        console.log("-------------------------------");
         console.log(`User: ${this.getUser()}`);
         console.log(`Number: ${this.getNumber()}`);
     }
-    public getUser(): string {
+    getUser() {
         return this.user;
     }
-    public getNumber(): number {
+    getNumber() {
         return this.number;
     }
-
-    public getSaldo(): number {
+    getSaldo() {
         return this.saldo;
     }
-    private setSaldo(value: number) {
+    setSaldo(value) {
         this.saldo = value;
     }
-
-    protected depositar(value: number): void {
+    depositar(value) {
         if (value > 0) {
             this.setSaldo(this.getSaldo() + value);
         }
@@ -64,79 +59,67 @@ class Acount {
             console.log("Valor negativo não é aceito");
         }
     }
-
-    protected sacar(value: number): void {
+    sacar(value) {
         if (value > 0 && value <= this.getSaldo()) {
-            this.setSaldo(this.getSaldo() - value)
+            this.setSaldo(this.getSaldo() - value);
         }
         else {
             if (value === 0) {
-                console.log("Valor deve ser maior que ZERO!")
-            } else {
-                console.log("Valor ultrapassa o valor disponivel em conta!")
+                console.log("Valor deve ser maior que ZERO!");
+            }
+            else {
+                console.log("Valor ultrapassa o valor disponivel em conta!");
             }
         }
     }
-
-    protected taxa(saldo: number, value: number = 0): number {
+    taxa(saldo, value = 0) {
         let taxa = saldo * value / 100;
         return taxa;
     }
 }
-
-
 class Acount_PF extends Acount {
-    cpf: number;
-    type: accountType = accountType.FISICO;
-
-    constructor(user: string, cpf: number) {
+    cpf;
+    type = accountType.FISICO;
+    constructor(user, cpf) {
         super(user);
         this.cpf = cpf;
-        console.log(`Conta PF criada: ${this.getUser()}`)
+        console.log(`Conta PF criada: ${this.getUser()}`);
     }
-
-    info(): void {
-        super.info()
-        console.log(`Tipo de Conta: ${this.type}`)
-        console.log(`CPF: ${this.cpf}`)
+    info() {
+        super.info();
+        console.log(`Tipo de Conta: ${this.type}`);
+        console.log(`CPF: ${this.cpf}`);
     }
-
-    public depositar(value: number): void {
+    depositar(value) {
         if (value >= 50 && value <= 300) {
             super.depositar(value);
-            console.log(`Valor depositado: R$${value},00`)
+            console.log(`Valor depositado: R$${value},00`);
         }
         else {
             if (value < 50) {
                 console.log("O valor minimo para deposito é R$50,00");
             }
-
             if (value > 300) {
                 console.log("O valor máximo para deposito é R$300,00");
             }
         }
     }
-
-    public sacar(value: number): void {
-
+    sacar(value) {
         if (value >= 20 && value <= 600) {
-
             if (value <= this.getSaldo()) {
                 super.sacar(value);
-                console.log(`Valor retirado da conta: R$${value},00`)
-
+                console.log(`Valor retirado da conta: R$${value},00`);
                 let taxa = super.taxa(value, 10);
-
                 console.log(`Taxa de ADM: R$${taxa}`);
-                console.log(`Valor real a ser retirado: R$${value - taxa}`)
+                console.log(`Valor real a ser retirado: R$${value - taxa}`);
             }
             else {
-                console.log("ERRO AO SACAR: valor ultrapassa o limite do saldo disponivel")
+                console.log("ERRO AO SACAR: valor ultrapassa o limite do saldo disponivel");
             }
         }
         else {
             if (value < 0) {
-                console.log("ERRO AO SACAR: Entre com um valor positivo")
+                console.log("ERRO AO SACAR: Entre com um valor positivo");
             }
             else {
                 if (value < 20) {
@@ -148,50 +131,40 @@ class Acount_PF extends Acount {
             }
         }
     }
-
-    public getCPF():number{
+    getCPF() {
         return this.cpf;
     }
-
-    public getType():accountType{
+    getType() {
         return this.type;
     }
 }
-
 class Account_PJ extends Acount {
-    private cnpj: number;
-    private type: accountType = accountType.JURIDICO;
-
-    constructor(user: string, cnpj: number) {
+    cnpj;
+    type = accountType.JURIDICO;
+    constructor(user, cnpj) {
         super(user);
         this.cnpj = cnpj;
-        console.log(`Conta PJ criada: ${this.getUser()}`)
+        console.log(`Conta PJ criada: ${this.getUser()}`);
     }
-
-    public info(): void {
-        super.info()
-        console.log(`Tipo de Conta: ${this.type}`)
-        console.log(`CNPJ: ${this.cnpj}`)
+    info() {
+        super.info();
+        console.log(`Tipo de Conta: ${this.type}`);
+        console.log(`CNPJ: ${this.cnpj}`);
     }
-
-    public depositar(value: number): void {
+    depositar(value) {
         if (value >= 300 && value <= 3000) {
             super.depositar(value);
         }
         else {
-
             if (value < 300) {
                 console.log("O valor minimo para deposito é R$300,00");
             }
             if (value > 3000) {
                 console.log("O valor máximo para deposito é R$3000,00");
             }
-
         }
-
     }
-
-    public sacar(value: number): void {
+    sacar(value) {
         if (value >= 80 && value <= 1300) {
             super.sacar(value - super.taxa(value, 4));
         }
@@ -202,28 +175,17 @@ class Account_PJ extends Acount {
             if (value > 1300) {
                 console.log("O valor maximo para sacar é R$1300,00");
             }
-
         }
     }
-
-    public getCNPJ():number{
+    getCNPJ() {
         return this.cnpj;
     }
-
-    public getType():accountType{
+    getType() {
         return this.type;
     }
 }
-
-
-
-
-
-
-
-let conta1 = new Acount_PF("bbb", 444444)
-let conta2 = new Account_PJ("ccc", 88888)
-
+let conta1 = new Acount_PF("bbb", 444444);
+let conta2 = new Account_PJ("ccc", 88888);
 conta1.depositar(200);
 conta1.sacar(-200);
-console.log("Saldo da conta: " + conta1.getSaldo())
+console.log("Saldo da conta: " + conta1.getSaldo());
