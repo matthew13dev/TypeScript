@@ -25,6 +25,10 @@ class Acount {
     number;
     user;
     saldo;
+    taxaCalculo = 0;
+    CalcularTributo(valor) {
+        return valor * this.taxaCalculo / 100;
+    }
     constructor(user) {
         this.number = this.gerarNumberAccount();
         this.user = user;
