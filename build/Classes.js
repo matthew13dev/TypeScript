@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Item = exports.User = exports.Things = void 0;
+exports.Item = exports.Things = void 0;
 /*
  Curso Type Script CFB - CURSO
  Aula 30 - Módulos
 */
-exports.Things = ["table", "pc", "keyboard", "mouse"];
+const Things = ["table", "pc", "keyboard", "mouse"];
+exports.Things = Things;
 class User {
     name;
     hight;
@@ -14,7 +15,6 @@ class User {
         this.hight = hight;
     }
 }
-exports.User = User;
 class Item {
     name;
     constructor(name) {
@@ -22,3 +22,4 @@ class Item {
     }
 }
 exports.Item = Item;
+exports.default = User;
