@@ -1,11 +1,12 @@
 /*
     Programação Orientada a Objetos (POO)
 
-    POO #5 - lesson 20 - HERANÇA #1
-    POO #6 - lesson 21 - HERANÇA #2
-    POO #7 - lesson 22 - HERANÇA #3
-    POO #8 - lesson 23 - HERANÇA #4
-    POO #9 - lesson 24 - HERANÇA #5
+    POO #05 - lesson 20 - HERANÇA #1
+    POO #06 - lesson 21 - HERANÇA #2
+    POO #07 - lesson 22 - HERANÇA #3
+    POO #08 - lesson 23 - HERANÇA #4
+    POO #09 - lesson 24 - HERANÇA #5
+    POO #10 - lesson 25 - Getters and Setters
 */
 
 enum accountType {
@@ -147,11 +148,19 @@ class Acount_PF extends Acount {
             }
         }
     }
+
+    public getCPF():number{
+        return this.cpf;
+    }
+
+    public getType():accountType{
+        return this.type;
+    }
 }
 
 class Account_PJ extends Acount {
-    cnpj: number;
-    type: accountType = accountType.JURIDICO;
+    private cnpj: number;
+    private type: accountType = accountType.JURIDICO;
 
     constructor(user: string, cnpj: number) {
         super(user);
@@ -195,6 +204,14 @@ class Account_PJ extends Acount {
             }
 
         }
+    }
+
+    public getCNPJ():number{
+        return this.cnpj;
+    }
+
+    public getType():accountType{
+        return this.type;
     }
 }
 

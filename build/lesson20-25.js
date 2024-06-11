@@ -2,11 +2,12 @@
 /*
     Programação Orientada a Objetos (POO)
 
-    POO #5 - lesson 20 - HERANÇA #1
-    POO #6 - lesson 21 - HERANÇA #2
-    POO #7 - lesson 22 - HERANÇA #3
-    POO #8 - lesson 23 - HERANÇA #4
-    POO #9 - lesson 24 - HERANÇA #5
+    POO #05 - lesson 20 - HERANÇA #1
+    POO #06 - lesson 21 - HERANÇA #2
+    POO #07 - lesson 22 - HERANÇA #3
+    POO #08 - lesson 23 - HERANÇA #4
+    POO #09 - lesson 24 - HERANÇA #5
+    POO #10 - lesson 25 - Getters and Setters
 */
 var accountType;
 (function (accountType) {
@@ -129,6 +130,12 @@ class Acount_PF extends Acount {
             }
         }
     }
+    getCPF() {
+        return this.cpf;
+    }
+    getType() {
+        return this.type;
+    }
 }
 class Account_PJ extends Acount {
     cnpj;
@@ -168,6 +175,12 @@ class Account_PJ extends Acount {
                 console.log("O valor maximo para sacar é R$1300,00");
             }
         }
+    }
+    getCNPJ() {
+        return this.cnpj;
+    }
+    getType() {
+        return this.type;
     }
 }
 let conta1 = new Acount_PF("bbb", 444444);
