@@ -5,6 +5,7 @@
     POO #6 - lesson 21 - HERANÇA #2
     POO #7 - lesson 22 - HERANÇA #3
     POO #8 - lesson 23 - HERANÇA #4
+    POO #9 - lesson 24 - HERANÇA #5
 */
 
 enum accountType {
@@ -108,8 +109,8 @@ class Acount_PF extends Acount {
             if (value < 50) {
                 console.log("O valor minimo para deposito é R$50,00");
             }
-            
-            if(value > 300) {
+
+            if (value > 300) {
                 console.log("O valor máximo para deposito é R$300,00");
             }
         }
@@ -119,20 +120,30 @@ class Acount_PF extends Acount {
 
         if (value >= 20 && value <= 600) {
 
-            super.sacar(value);
-            console.log(`Valor retirado da conta: R$${value},00`)
-            
-            let taxa = super.taxa(value, 10);
+            if (value <= this.getSaldo()) {
+                super.sacar(value);
+                console.log(`Valor retirado da conta: R$${value},00`)
 
-            console.log(`Taxa de ADM: R$${taxa}`);
-            console.log(`Valor real a ser retirado: R$${value - taxa}`)
+                let taxa = super.taxa(value, 10);
+
+                console.log(`Taxa de ADM: R$${taxa}`);
+                console.log(`Valor real a ser retirado: R$${value - taxa}`)
+            }
+            else {
+                console.log("ERRO AO SACAR: valor ultrapassa o limite do saldo disponivel")
+            }
         }
         else {
-            if(value < 20){
-                console.log("O valor minimo para sacar é R$20,00");
+            if (value < 0) {
+                console.log("ERRO AO SACAR: Entre com um valor positivo")
             }
-            if(value > 600){
-                console.log("O valor maximo para sacar é R$600,00");
+            else {
+                if (value < 20) {
+                    console.log("ERRO AO SACAR: O valor minimo para sacar é R$20,00");
+                }
+                if (value > 600) {
+                    console.log("ERRO AO SACAR: O valor maximo para sacar é R$600,00");
+                }
             }
         }
     }
@@ -197,5 +208,5 @@ let conta1 = new Acount_PF("bbb", 444444)
 let conta2 = new Account_PJ("ccc", 88888)
 
 conta1.depositar(200);
-conta1.sacar(20);
+conta1.sacar(-200);
 console.log("Saldo da conta: " + conta1.getSaldo())
