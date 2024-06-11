@@ -16,8 +16,12 @@ enum accountType {
     JURIDICO = "Pessoa Juridica",
 }
 
+interface ITributos{
+    taxaCalculo:number;
+    CalcularTributo(valor:number):number;
+}
 
-abstract class Acount {
+abstract class Acount implements ITributos {
     /*
     PUBLIC - Acessado de qualquer lugar
     PRIVATE - Acessado somente pela classe "PAI"
@@ -26,6 +30,11 @@ abstract class Acount {
     private readonly number: number;
     protected user: string;
     private saldo: number;
+
+    taxaCalculo:number = 0;
+    CalcularTributo(valor:number):number{
+        return valor * this.taxaCalculo / 100;
+    }
 
     constructor(user: string) {
         this.number = this.gerarNumberAccount();
