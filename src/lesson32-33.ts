@@ -2,18 +2,81 @@
  Curso Type Script CFB - CURSO
  Aula 32 - Namespace #1
  Aula 33 - Namespace #2
+ Aula 34 - Namespace #3
 */
 
 
 namespace Veiculos {
 
-    export class Car {
-        name: string;
-        motor: Motores.Motor;
+    export enum Colors {
+        BLACK = "black",
+        WHITE = "white",
+        RED = "red",
+        YELLOW = "yellow",
 
-        constructor(name: string) {
+    }
+
+    abstract class Car {
+        private name: string;
+        private motor: Motores.Motor;
+        private color: string;
+
+        constructor(name: string, motor: Motores.Motor, color: Colors) {
             this.name = name;
-            this.motor = new Motores.Motor(300, 8);
+            this.motor = motor
+            this.color = color;
+        }
+
+        public ligar(): void {
+            if (!this.motor.get_Is_Ligado()) {
+                this.motor.ligarMotor();
+            } else {
+                console.log("Motor já está ligado.")
+            }
+        }
+        public desligar(): void {
+            if (this.motor.get_Is_Ligado()) {
+                this.motor.desligarMotor();
+            } else {
+                console.log("Motor já está desligado.")
+            }
+
+        }
+
+        public getMyColor(): string {
+            return this.color;
+        }
+
+        public getMyName(): string {
+            return this.name;
+        }
+
+        public getEstouLigado(): void {
+            let text: String = "";
+
+            if (this.motor.get_Is_Ligado()) {
+                text = "sim, o carro está ligado";
+            } else {
+                text = "Não, o carro não está ligado";
+            }
+
+            console.log(text);
+        }
+
+        public getMyPotencia(): Number {
+            return this.motor.getPotencia();
+        }
+    }
+
+    export class CarSport extends Car {
+        constructor(name: string, color: Colors) {
+            super(name, new Motores.Motor(6, 300, new Motores.Turbo(100)), color);
+        }
+    }
+
+    export class CarroPopular extends Car {
+        constructor(name: string, color: Colors) {
+            super(name, new Motores.Motor(3, 100), Colors.BLACK);
         }
     }
 }
@@ -22,7 +85,7 @@ namespace Veiculos {
 
 namespace Motores {
 
-    class Turbo {
+    export class Turbo {
         private potencia: number;
 
         constructor(potencia: number) {
@@ -37,7 +100,7 @@ namespace Motores {
     export class Motor {
         private potencia: number;
         private cilindros: number;
-        private ligado: boolean;
+        private is_Ligado: boolean;
         private valueTurbo: number;
         private temTurbo: boolean;
 
@@ -45,7 +108,7 @@ namespace Motores {
 
             this.potencia = potencia;
             this.cilindros = cilindros;
-            this.ligado = false;
+            this.is_Ligado = false;
 
             if (turbo) {
                 this.valueTurbo = turbo.getPotencia();
@@ -57,28 +120,56 @@ namespace Motores {
             }
         }
 
-        public setLigado(ligado:boolean):void{
-            this.ligado = ligado;
+        public ligarMotor(): void {
+            if (this.is_Ligado != true) {
+                console.log("Motor foi ligado.")
+                this.is_Ligado = true;
+            }
+            else {
+                console.log("Motor já está ligado.")
+            }
         }
 
-        public getLigado():boolean{
-            return this.ligado;
+        public desligarMotor(): void {
+            if (this.is_Ligado != false) {
+                console.log("Motor foi desligado.")
+                this.is_Ligado = false;
+            } else {
+                console.log("Motor já está desligado.")
+            }
         }
 
-        public getPotencia():number{
+        public get_Is_Ligado(): boolean {
+            return this.is_Ligado;
+        }
+
+        public ligar() {
+            this.is_Ligado = true;
+        }
+
+        public desligar() {
+            this.is_Ligado = false;
+        }
+
+        public getPotencia(): number {
             return this.potencia;
         }
 
-        public getTemTurbo():boolean{
+        public getTemTurbo(): boolean {
             return this.temTurbo;
         }
+
     }
 }
 
 
-const car00 = new Veiculos.Car("Honda Civic");
-console.log(car00.name);
-console.log(car00.motor);
 
 
 
+let carro01 = new Veiculos.CarSport("Ferrari", Veiculos.Colors.RED);
+console.log(carro01);
+carro01.ligar();
+console.log(carro01);
+carro01.getEstouLigado();
+carro01.desligar();
+carro01.getEstouLigado();
